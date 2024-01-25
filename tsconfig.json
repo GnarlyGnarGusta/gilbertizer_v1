@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "skipLibCheck": true,
+    "jsxImportSource": "@emotion/react",
+    "allowJs": true,
+    "outDir": "./dist"
+  },
+  "include": ["src", "types"],
+  "exclude": ["./dist/**/*"]
+}
