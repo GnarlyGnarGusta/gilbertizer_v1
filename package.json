@@ -1,5 +1,5 @@
 {
-  "name": "gibertizer-v1",
+  "name": "gilbertizer-v1",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -35,5 +35,10 @@
     "tailwindcss": "^3.4.1",
     "twin.macro": "^3.4.1",
     "vite": "^5.0.8"
+  },
+  "author": {
+    "name": "Gunnar Gustafson",
+    "email": "songgustaf@gmail.com",
+    "url": "https://github.com/GnarlyGnarGusta"
   }
 }
