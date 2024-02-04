@@ -1,12 +1,12 @@
-import Slider from "../Slider";
+import FatFilterEngine from "../../engines/FatFilterEngine";
 import { useEngine } from "../Engine";
-import OscillatorEngine from "../../engines/OscillatorEngine";
+import Slider from "../Slider";
 
-export default function Detune() {
+export default function Resonance() {
   const { registerParam } = useEngine();
 
   const { handleUpdate, id, value } = registerParam(
-    OscillatorEngine.params.DETUNE,
+    FatFilterEngine.params.RESONANCE,
     {
       onUpdate(event) {
         return event.target.value;
@@ -16,12 +16,12 @@ export default function Detune() {
 
   return (
     <Slider
-      label="Detune"
+      label="Resonance"
       name={id}
       id={id}
       step={1}
       min={0}
-      max={500}
+      max={20}
       onInput={handleUpdate}
       value={value}
     />

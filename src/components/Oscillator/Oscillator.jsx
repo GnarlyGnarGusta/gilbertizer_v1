@@ -1,40 +1,32 @@
-import { useEffect } from "react";
-import { useRootEngine } from "../Root";
-
 import Frequency from "./Frequency";
 import Detune from "./Detune";
-import Wave from "./Wave";
-import OscillatorProvider from "./OscillatorProvider";
 import tw from "twin.macro";
+import { EngineProvider, useEnginePatchEffect } from "../Engine";
+import WaveFormSelect from "../WaveFormSelect";
+import OscillatorEngine from "../../engines/OscillatorEngine";
 
 /**
  * An oscillator node
  *
- * @param {{ oscillator: import('../../engines/OscillatorEngine').default }} props
+ * @param {{ engine: import('../../engines/OscillatorEngine').default }} props
  * @returns {JSX.Element}
  */
-export default function Oscillator({ oscillator, name, title }) {
-  const rootEngine = useRootEngine();
-
-  useEffect(() => {
-    oscillator.patch(
-      rootEngine.audioContext,
-      rootEngine.audioContext.destination
-    );
-
-    return () => {
-      oscillator.osc.stop();
-    };
-  }, [rootEngine, oscillator]);
+export default function Oscillator({
+  engine: oscillator,
+  name,
+  title,
+  destination,
+}) {
+  useEnginePatchEffect(oscillator.patch, destination);
 
   return (
-    <OscillatorProvider engine={oscillator} name={name}>
+    <EngineProvider engine={oscillator} name={name}>
       <div css={[tw`mb-4 bg-white bg-opacity-10 p-2 rounded`]}>
         <h2 css={[tw`mb-1`]}>{title}</h2>
         <Frequency />
         <Detune />
-        <Wave />
+        <WaveFormSelect param={OscillatorEngine.params.TYPE} />
       </div>
-    </OscillatorProvider>
+    </EngineProvider>
   );
 }

@@ -1,12 +1,12 @@
-import Slider from "../Slider";
+import FatFilterEngine from "../../engines/FatFilterEngine";
 import { useEngine } from "../Engine";
-import OscillatorEngine from "../../engines/OscillatorEngine";
+import Slider from "../Slider";
 
-export default function Detune() {
+export default function HighPassCutoff() {
   const { registerParam } = useEngine();
 
   const { handleUpdate, id, value } = registerParam(
-    OscillatorEngine.params.DETUNE,
+    FatFilterEngine.params.HPF_CUTOFF,
     {
       onUpdate(event) {
         return event.target.value;
@@ -16,12 +16,12 @@ export default function Detune() {
 
   return (
     <Slider
-      label="Detune"
+      label="High Pass Cutoff"
       name={id}
       id={id}
       step={1}
       min={0}
-      max={500}
+      max={220}
       onInput={handleUpdate}
       value={value}
     />

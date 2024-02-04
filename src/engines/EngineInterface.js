@@ -5,14 +5,25 @@ export default class EngineInterface {
     initialState = {},
     defaultState = {},
     valueReducer = () => {},
+    rootContext,
   } = {}) {
+    /**
+     * @type {AudioContext}
+     */
+    this.rootContext = rootContext;
     this.state = initializeState(initialState, defaultState);
     this.valueReducer = valueReducer.bind(this);
+    this.scheduledListeners = new Set();
 
     this.getSnapshot = this.getSnapshot.bind(this);
     this.subscribe = this.subscribe.bind(this);
     this.update = this.update.bind(this);
     this.emitChange = this.emitChange.bind(this);
+
+    /**
+     * @type {Boolean}
+     */
+    this.initialized = false;
   }
 
   getSnapshot() {
@@ -34,14 +45,14 @@ export default class EngineInterface {
   }
 
   update(newState) {
+    for (let [key, value] of Object.entries(newState)) {
+      this.valueReducer(key, value);
+    }
+
     this.state = {
       ...this.state,
       ...newState,
     };
-
-    for (let [key, value] of Object.entries(newState)) {
-      this.valueReducer(key, value);
-    }
 
     this.emitChange();
   }

@@ -1,12 +1,12 @@
-import Slider from "../Slider";
+import LfoEngine from "../../engines/LfoEngine";
 import { useEngine } from "../Engine";
-import OscillatorEngine from "../../engines/OscillatorEngine";
+import Slider from "../Slider";
 
-export default function Detune() {
+export default function Frequency() {
   const { registerParam } = useEngine();
 
   const { handleUpdate, id, value } = registerParam(
-    OscillatorEngine.params.DETUNE,
+    LfoEngine.params.FREQUENCY,
     {
       onUpdate(event) {
         return event.target.value;
@@ -16,12 +16,12 @@ export default function Detune() {
 
   return (
     <Slider
-      label="Detune"
+      label="Frequency"
       name={id}
       id={id}
       step={1}
       min={0}
-      max={500}
+      max={100}
       onInput={handleUpdate}
       value={value}
     />

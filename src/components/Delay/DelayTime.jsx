@@ -1,12 +1,12 @@
-import Slider from "../Slider";
+import DelayEngine from "../../engines/DelayEngine";
 import { useEngine } from "../Engine";
-import OscillatorEngine from "../../engines/OscillatorEngine";
+import Slider from "../Slider";
 
-export default function Detune() {
+export default function DelayTime() {
   const { registerParam } = useEngine();
 
   const { handleUpdate, id, value } = registerParam(
-    OscillatorEngine.params.DETUNE,
+    DelayEngine.params.DELAY_TIME,
     {
       onUpdate(event) {
         return event.target.value;
@@ -16,12 +16,12 @@ export default function Detune() {
 
   return (
     <Slider
-      label="Detune"
+      label="Delay Time"
       name={id}
       id={id}
-      step={1}
+      step={0.1}
       min={0}
-      max={500}
+      max={1}
       onInput={handleUpdate}
       value={value}
     />

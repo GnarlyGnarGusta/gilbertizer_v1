@@ -1,7 +1,6 @@
-import { useRootEngine } from "../Root";
-import tw from "twin.macro";
-import useOscillator from "./useOscillator";
 import Slider from "../Slider";
+import { useEngine } from "../Engine";
+import OscillatorEngine from "../../engines/OscillatorEngine";
 
 /**
  * An oscillator node
@@ -10,16 +9,16 @@ import Slider from "../Slider";
  * @returns {JSX.Element}
  */
 export default function Frequency() {
-  const { state, setOsc, getName } = useOscillator();
-  const rootEngine = useRootEngine();
+  const { registerParam } = useEngine();
 
-  const handleFrequency = (event) => {
-    const frequency = event.target.value;
-
-    setOsc({ frequency }, rootEngine.audioContext.currentTime);
-  };
-
-  const id = getName("frequency");
+  const { handleUpdate, id, value } = registerParam(
+    OscillatorEngine.params.FREQUENCY,
+    {
+      onUpdate(event) {
+        return event.target.value;
+      },
+    }
+  );
 
   return (
     <Slider
@@ -29,8 +28,8 @@ export default function Frequency() {
       step={1}
       min={0}
       max={500}
-      onInput={handleFrequency}
-      value={state.frequency}
+      onInput={handleUpdate}
+      value={value}
     />
   );
 }

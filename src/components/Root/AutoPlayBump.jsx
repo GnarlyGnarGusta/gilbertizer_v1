@@ -19,7 +19,6 @@ export default function AutoPlayBump({ children }) {
 
   useEffect(() => {
     const video = videoNodeRef.current;
-    console.info(video);
     if (video instanceof HTMLVideoElement) {
       video
         .play()

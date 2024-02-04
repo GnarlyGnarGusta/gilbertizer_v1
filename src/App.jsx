@@ -4,11 +4,13 @@ import tw, { css, theme, GlobalStyles as BaseStyles } from "twin.macro";
 import ids from "./utils/ids";
 
 import rootSoundModule from "./sound_modules/rootSoundModule";
-import oscillator1 from "./sound_modules/oscillator1";
-import oscillator2 from "./sound_modules/oscillator2";
-
 import { Root } from "./components/Root";
-import Oscillator from "./components/Oscillator/Oscillator";
+import Oscillator1 from "./instruments/Oscillator1";
+import Filter1 from "./instruments/Filter1";
+import LFO1 from "./instruments/LFO1";
+import FatFilterEngine from "./engines/FatFilterEngine";
+import LFO2 from "./instruments/LFO2";
+import MasterDelay from "./instruments/Delay";
 
 const initStyles = css({
   body: {
@@ -33,17 +35,22 @@ function App() {
         </header>
         <section css={[tw`grow p-2`]}>
           <Root engine={rootSoundModule}>
-            <div css={[tw`grid grid-cols-4 gap-2`]}>
-              <Oscillator
-                name="osc1"
-                title="Oscillator 1"
-                oscillator={oscillator1}
+            <div css={[tw`grid grid-cols-2 md:grid-cols-4 gap-2`]}>
+              <Oscillator1 destination={Filter1.input} />
+              <Filter1 destination={MasterDelay.input} />
+              <LFO1
+                title="Filter Frequency Mod"
+                destination={Filter1.paramInput(
+                  FatFilterEngine.params.LPF_CUTOFF
+                )}
               />
-              <Oscillator
-                name="osc2"
-                title="Oscillator 2"
-                oscillator={oscillator2}
+              <LFO2
+                title="Filter Gain Mod"
+                destination={Filter1.paramInput(
+                  FatFilterEngine.params.PRE_GAIN
+                )}
               />
+              <MasterDelay destination={rootSoundModule.input} />
             </div>
           </Root>
         </section>

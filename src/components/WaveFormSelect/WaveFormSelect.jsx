@@ -1,6 +1,5 @@
 import tw from "twin.macro";
-import { useRootEngine } from "../Root";
-import useOscillator from "./useOscillator";
+import { useEngine } from "../Engine";
 
 const waveTable = [
   {
@@ -21,18 +20,17 @@ const waveTable = [
   },
 ];
 
-/**
- * An oscillator node
- *
- * @param {{ oscillator: import('../../engines/OscillatorEngine').default }} props
- * @returns {JSX.Element}
- */
-export default function Wave() {
-  const { state, setOsc, getName } = useOscillator();
-  const rootEngine = useRootEngine();
+export default function WaveFormSelect({ param }) {
+  const { registerParam, getName } = useEngine();
+
+  const { handleUpdate, id, value } = registerParam(param, {
+    onUpdate(wave) {
+      return wave;
+    },
+  });
 
   const handleWave = (waveform) => () => {
-    setOsc({ type: waveform }, rootEngine.audioContext.currentTime);
+    handleUpdate(waveform);
   };
 
   return (
@@ -44,13 +42,13 @@ export default function Wave() {
             <input
               type="radio"
               id={getName(wave)}
-              name={getName("waveform")}
+              name={id}
               value={wave}
-              checked={state.type === wave}
+              checked={value === wave}
               onChange={handleWave(wave)}
               css={[tw`accent-gray-800`]}
             />
-            <label for={getName(wave)}>{display}</label>
+            <label htmlFor={getName(wave)}>{display}</label>
           </div>
         );
       })}
