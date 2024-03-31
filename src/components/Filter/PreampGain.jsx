@@ -14,14 +14,17 @@ export default function PreampGain() {
     }
   );
 
+  /**
+   * TODO: make min and max values part of the instruments parameters.
+   */
   return (
     <Slider
       label="Gain"
       name={id}
       id={id}
-      step={1}
+      step={0.1}
       min={0}
-      max={20}
+      max={1}
       onInput={handleUpdate}
       value={value}
     />

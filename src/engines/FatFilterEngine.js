@@ -53,7 +53,7 @@ function valueReducer(key, value) {
 }
 
 const defaultState = {
-  [PARAMETERS.PRE_GAIN]: 20,
+  [PARAMETERS.PRE_GAIN]: 1,
   [PARAMETERS.DISTORTION]: 0,
   [PARAMETERS.RESONANCE]: 20,
   [PARAMETERS.LPF_CUTOFF]: 20,

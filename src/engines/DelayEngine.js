@@ -74,7 +74,7 @@ export default class DelayEngine extends EngineInterface {
     this.toneFeedback = new BiquadFilterNode(this.rootContext, {
       type: "highshelf",
       frequency: 3000,
-      gain: -2,
+      gain: -0.5,
     });
 
     destination().then((destination) => {
